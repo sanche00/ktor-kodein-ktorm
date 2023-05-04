@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS tba_city (id1 INT, id2 INT, "name" VARCHAR(50) NOT NULL, CONSTRAINT pk_tba_city PRIMARY KEY (id1, id2))
