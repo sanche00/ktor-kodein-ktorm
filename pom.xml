@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ktor.sp.ic.ssg.com</groupId>
+    <groupId>com.ssg.ic.sp</groupId>
     <artifactId>ktor-kodein-ktorm</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>ktor-kodein-ktorm</name>
     <description>ktor-kodein-ktorm</description>
     <properties>
         <ktor_version>2.2.4</ktor_version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin_version>1.8.21</kotlin_version>
+        <kotlin_version>1.8.20</kotlin_version>
         <logback_version>1.2.11</logback_version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
@@ -27,7 +27,25 @@
     </properties>
     <repositories>
     </repositories>
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>http://10.253.11.197:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>http://10.253.11.197:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.ssg.ic.sp</groupId>
+            <artifactId>kotlin-db-common</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-server-core-jvm</artifactId>
@@ -93,6 +111,12 @@
         <dependency>
             <groupId>org.ktorm</groupId>
             <artifactId>ktorm-core</artifactId>
+            <version>${ktorm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ktorm</groupId>
+            <artifactId>ktorm-support-postgresql</artifactId>
             <version>${ktorm.version}</version>
         </dependency>
 
@@ -201,12 +225,7 @@
             <version>2.14.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.ssg.ic.sp</groupId>
-            <artifactId>kotlin-db-common</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

@@ -11,6 +11,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.ktorm.database.Database
 import org.ktorm.dsl.*
+import org.ktorm.entity.Entity
+import org.ktorm.entity.add
+import org.ktorm.entity.find
+import org.ktorm.entity.sequenceOf
 import org.ktorm.logging.ConsoleLogger
 import org.ktorm.logging.LogLevel
 import org.ktorm.schema.int
@@ -42,7 +46,11 @@ class KtormTestH2File {
             )
         }
         dualDataBase = DualDataBase(
-            writeConnect = DBConnect(url = "jdbc:h2:file:./test;MODE=PostgreSQL;INIT=RUNSCRIPT FROM './test-sql/create-city.sql';DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=true", driver = "org.h2.Driver", user = "sa"),
+            writeConnect = DBConnect(
+                url = "jdbc:h2:file:./test;MODE=PostgreSQL;INIT=RUNSCRIPT FROM './test-sql/create-city.sql';DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=true",
+                driver = "org.h2.Driver",
+                user = "sa"
+            ),
             databaseConnection = databaseConnection
         )
         ktormDatabase = KtormDatabase(dualDataBase)
@@ -63,6 +71,38 @@ class KtormTestH2File {
         }
 
     }
+
+
+    @Test
+    fun ktormDao() {
+//        val ret = ktormDatabase.write { database ->
+//            database.insert(KtormCitis) {
+//                set(it.id1, 2)
+//                set(it.id2, 2)
+//                set(it.name, "test")
+//            }
+//        }
+//        ktormDatabase.read { database ->
+//            database.from(KtormCitis).select().forEach { println(it) }
+//        }
+
+        ktormDatabase.write { database ->
+            database.ktormCitis.add(KtormCity {
+//                id = KtormCityId(1,2)
+                id1 = 1
+                id2 = 3
+                name = "test"
+            })
+        }
+        val ret = ktormDatabase.read { database ->
+            database.ktormCitis.find { it.id1 eq 1 }
+        }
+        ret?.let {
+            println(it)
+        }
+    }
+
+    val Database.ktormCitis get() = this.sequenceOf(KtormCitis)
 }
 
 object Cities : Table("tba_city") {
@@ -74,9 +114,21 @@ object Cities : Table("tba_city") {
     override val primaryKey = PrimaryKey(id1, id2)
 }
 
-object KtormCitis : org.ktorm.schema.Table<Nothing>("tba_city") {
+interface KtormCity : Entity<KtormCity> {
+    companion object : Entity.Factory<KtormCity>()
 
-    val id1 = int("id1").primaryKey()
-    val id2 = int("id2").primaryKey()
-    val name = varchar("name")
+    var id1: Int
+    var id2: Int
+    var name: String
+
 }
+
+object KtormCitis : org.ktorm.schema.Table<KtormCity>("tba_city") {
+    val id1 = int("id1").primaryKey().bindTo { it.id1 }
+    val id2 = int("id2").primaryKey().bindTo { it.id2 }
+    val name = varchar("name").bindTo { it.name }
+
+}
+data class KtormCityId(val id1 : Int, val id2 : Int)
+
+

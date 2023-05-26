@@ -65,6 +65,10 @@ class KtormTestH2 {
 }
 
 data class City(val id1: Int, val id2: Int, val name: String)
+
+data class CityId(val id1: Int, val id2: Int) {
+
+}
 //
 //object Cities : Table("tba_city") {
 //    val id1 = integer("id1")
