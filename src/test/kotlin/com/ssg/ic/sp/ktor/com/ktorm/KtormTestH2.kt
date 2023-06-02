@@ -2,6 +2,7 @@ package com.ssg.ic.sp.ktor.com.ktorm
 
 import com.ssg.ic.sp.db.DBConnect
 import com.ssg.ic.sp.db.DualDataBase
+import com.ssg.ic.sp.ktorm.KtormDatabase
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.ktorm.database.Database

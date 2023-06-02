@@ -42,9 +42,17 @@
 
         <dependency>
             <groupId>com.ssg.ic.sp</groupId>
+            <artifactId>kotlin-lib-ktorm</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.ssg.ic.sp</groupId>
             <artifactId>kotlin-db-common</artifactId>
             <version>0.0.1</version>
         </dependency>
+
 
         <dependency>
             <groupId>io.ktor</groupId>

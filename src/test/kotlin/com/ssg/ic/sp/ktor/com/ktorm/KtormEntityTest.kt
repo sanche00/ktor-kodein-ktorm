@@ -2,6 +2,7 @@ package com.ssg.ic.sp.ktor.com.ktorm
 
 import com.ssg.ic.sp.db.DBConnect
 import com.ssg.ic.sp.db.DualDataBase
+import com.ssg.ic.sp.ktorm.KtormDatabase
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -27,7 +28,7 @@ const val DEFAULT_POOL_SIZE = 3
 
 class KtormEntityTest {
 
-    lateinit var ktormDatabase:KtormDatabase
+    lateinit var ktormDatabase: KtormDatabase
 
     @BeforeEach
     fun before() {
